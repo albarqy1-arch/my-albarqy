@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>أبطال الإحصاء - تمرين تفاعلي | الصف الثالث الابتدائي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fef5e7 0%, #fff1e0 100%);
+            font-family: 'Cairo', sans-serif;
+            padding: 1rem 1rem 2.5rem;
+            color: #2c3a2f;
+        }
+
+        /* حاوية طولية */
+        .long-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* رأس الصفحة الجذاب - تم إزالة العبارة المطلوبة */
+        .hero {
+            background: #ffedd5;
+            border-radius: 50px;
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            border: 2px solid #ffd89a;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #c16509;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero h1 i {
+            background: #f5a623;
+            padding: 8px;
+            border-radius: 60px;
+            color: white;
+        }
+
+        .hero p {
+            background: #fff0e0;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            margin-top: 12px;
+            font-size: 1rem;
+        }
+
+        .star-line {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0 5px;
+        }
+
+        .star-line i {
+            color: #ffbc3c;
+            font-size: 1.2rem;
+        }
+
+        /* كل بطاقة سؤال - تصميم طويل ومريح */
+        .question-block {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 2.2rem;
+            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,215,150,0.7);
+            width: 100%;
+        }
+
+        .question-header {
+            background: #fff3e4;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #ffcf8a;
+        }
+
+        .question-header i {
+            font-size: 2rem;
+        }
+
+        .question-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #b45b1a;
+            margin: 0;
+        }
+
+        .question-text {
+            padding: 1.2rem 1.5rem 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.6;
+            background: #ffffff;
+        }
+
+        .story-box {
+            background: #fff7e8;
+            border-radius: 28px;
+            padding: 12px 18px;
+            margin: 12px 0 8px;
+            border-right: 8px solid #f5a623;
+            font-weight: 500;
+        }
+
+        /* خيارات الاختيار */
+        .choices {
+            padding: 0.5rem 1.5rem 1.5rem;
+        }
+
+        .choice {
+            background: #f9f4ec;
+            border-radius: 60px;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+            color: #4f3a28;
+        }
+
+        .choice i {
+            width: 32px;
+            font-size: 1.3rem;
+            color: #e6892e;
+        }
+
+        .choice:hover {
+            background: #ffe1bd;
+            transform: scale(0.98);
+            border-color: #ffb157;
+        }
+
+        /* منطقة التغذية الراجعة */
+        .feedback-area {
+            background: #f0f5fa;
+            border-radius: 28px;
+            margin: 0 1.5rem 1.5rem 1.5rem;
+            padding: 12px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 6px solid #ffb74d;
+        }
+
+        .correct-feedback {
+            background: #d9f0e1;
+            border-right-color: #2b8c4a;
+            color: #1a5c36;
+        }
+
+        .wrong-feedback {
+            background: #ffe1df;
+            border-right-color: #d9534f;
+            color: #a12;
+        }
+
+        .reset-btn {
+            background: #ecf0f3;
+            padding: 6px 15px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-right: 1.5rem;
+            margin-bottom: 1.2rem;
+            width: fit-content;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #e0e6ed;
+            transform: scale(0.96);
+        }
+
+        footer {
+            text-align: center;
+            background: #ffecd9;
+            padding: 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #b45a2b;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 650px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .question-header h2 {
+                font-size: 1.2rem;
+            }
+            .choice {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .emoji-deco {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="long-container">
+    <div class="hero">
+        <div class="star-line"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="fas fa-smile-beam"></i></div>
+        <h1><i class="fas fa-chart-bar"></i> أبطال الإحصاء <i class="fas fa-face-grin-tongue-squint"></i></h1>
+        <p>📊 الصف الثالث الابتدائي • الفصل العاشر: تمثيل البيانات بالرموز</p>
+        <div class="star-line"><i class="fas fa-calculator"></i> اختر الإجابة الصحيحة، وستحصل على نجمة ذهبية ✨</div>
+    </div>
+
+    <!-- السؤال 1 (طولي) -->
+    <div class="question-block" id="q1-block">
+        <div class="question-header">
+            <i class="fas fa-tv" style="color:#e67e22;"></i>
+            <h2>السؤال الأول 📺 البرامج المفضلة</h2>
+        </div>
+        <div class="question-text">
+            التمثيل بالرموز يُظهر: عدد الذين يُفضلون البرامج الرياضية = ٢٨ شخصًا، والذين يُفضلون البرامج الثقافية = ١٠ أشخاص.
+            <div class="story-box"><i class="fas fa-question-circle"></i> <strong>كم يزيد عدد محبي الرياضة على محبي الثقافة؟</strong> ( درس ١٠-٢ )</div>
+        </div>
+        <div class="choices" id="choices-q1">
+            <div class="choice" data-q="1" data-val="18"><i class="fas fa-futbol"></i> ١٨ شخصًا</div>
+            <div class="choice" data-q="1" data-val="26"><i class="fas fa-chart-line"></i> ٢٦ شخصًا</div>
+            <div class="choice" data-q="1" data-val="10"><i class="fas fa-balance-scale"></i> ١٠ أشخاص</div>
+        </div>
+        <div class="feedback-area" id="feed-q1"><i class="fas fa-lightbulb"></i> اختر الإجابة الصحيحة .. أنت قادر!</div>
+        <div class="reset-btn" data-reset="1"><i class="fas fa-undo-alt"></i> أعد المحاولة 🔄</div>
+    </div>
+
+    <!-- السؤال 2: ترتيب الفصول -->
+    <div class="question-block" id="q2-block">
+        <div class="question-header">
+            <i class="fas fa-calendar-alt" style="color:#2ecc71;"></i>
+            <h2>السؤال الثاني 🍂🌸 فصول السنة</h2>
+        </div>
+        <div class="question-text">
+            طلب المعلم ترتيب فصول السنة (ربيع، صيف، خريف، شتاء) بطرق مختلفة.
+            <div class="story-box"><i class="fas fa-list-ol"></i> <strong>كم ترتيبًا مختلفًا يمكننا الحصول عليه؟</strong> (درس ١٠-٣)</div>
+        </div>
+        <div class="choices" id="choices-q2">
+            <div class="choice" data-q="2" data-val="4"><i class="fas fa-check-circle"></i> ٤ ترتيبات</div>
+            <div class="choice" data-q="2" data-val="12"><i class="fas fa-chart-simple"></i> ١٢ ترتيبًا</div>
+            <div class="choice" data-q="2" data-val="24"><i class="fas fa-magic"></i> ٢٤ ترتيبًا</div>
+        </div>
+        <div class="feedback-area" id="feed-q2"><i class="fas fa-question-circle"></i> فكر جيدًا: كم طريقة لترتيب ٤ أشياء؟</div>
+        <div class="reset-btn" data-reset="2"><i class="fas fa-sync-alt"></i> إعادة المحاولة</div>
+    </div>
+
+    <!-- السؤال 3: رموز الرحلات (5 رموز كل رمز = رحلتين) -->
+    <div class="question-block" id="q3-block">
+        <div class="question-header">
+            <i class="fas fa-plane" style="color:#3498db;"></i>
+            <h2>السؤال الثالث ✈️ رحلات العائلة</h2>
+        </div>
+        <div class="question-text">
+            تمثيل بالرموز يحتوي على <strong>٥ رموز</strong>، وكل رمز يمثل <strong>رحلتين</strong> لكل شخص خلال السنة.
+            <div class="story-box"><i class="fas fa-person-walking-luggage"></i> كم عدد الرحلات الإجمالية للأشخاص جميعهم؟ (درس ١٠-١)</div>
+        </div>
+        <div class="choices" id="choices-q3">
+            <div class="choice" data-q="3" data-val="7"><i class="fas fa-cloud-sun"></i> ٧ رحلات</div>
+            <div class="choice" data-q="3" data-val="10"><i class="fas fa-suitcase"></i> ١٠ رحلات</div>
+            <div class="choice" data-q="3" data-val="15"><i class="fas fa-globe"></i> ١٥ رحلة</div>
+        </div>
+        <div class="feedback-area" id="feed-q3"><i class="fas fa-plane-departure"></i> اختر العدد الصحيح .. كل رمز = ٢ رحلة</div>
+        <div class="reset-btn" data-reset="3"><i class="fas fa-broom"></i> مسح الإجابة</div>
+    </div>
+
+    <!-- السؤال 4: الفطائر بالزعتر والجبن -->
+    <div class="question-block" id="q4-block">
+        <div class="question-header">
+            <i class="fas fa-utensils" style="color:#e67e22;"></i>
+            <h2>السؤال الرابع 🥙 فطائر لذيذة</h2>
+        </div>
+        <div class="question-text">
+            عدد الطلاب الذين يفضلون فطائر الزعتر = ٣٦ طالبًا، ويفضل فطائر الجبن = ١٨ طالبًا.
+            <div class="story-box"><i class="fas fa-chart-line"></i> <strong>كم يزيد عدد محبي الزعتر عن محبي الجبن؟</strong> (درس ١٠-٢)</div>
+        </div>
+        <div class="choices" id="choices-q4">
+            <div class="choice" data-q="4" data-val="12"><i class="fas fa-minus"></i> ١٢ طالبًا</div>
+            <div class="choice" data-q="4" data-val="18"><i class="fas fa-equals"></i> ١٨ طالبًا</div>
+            <div class="choice" data-q="4" data-val="24"><i class="fas fa-plus"></i> ٢٤ طالبًا</div>
+        </div>
+        <div class="feedback-area" id="feed-q4"><i class="fas fa-cheese"></i> احسب الفرق بين الزعتر والجبن</div>
+        <div class="reset-btn" data-reset="4"><i class="fas fa-arrow-rotate-left"></i> إعادة</div>
+    </div>
+
+    <!-- السؤال 5: 8 رموز كل رمز = 3 وحدات -->
+    <div class="question-block" id="q5-block">
+        <div class="question-header">
+            <i class="fas fa-chart-gantt" style="color:#9b59b6;"></i>
+            <h2>السؤال الخامس 🎨 رموز ووحدات</h2>
+        </div>
+        <div class="question-text">
+            تمثيل بالرموز يتكون من <strong>٨ رموز</strong> وكل رمز يمثل <strong>٣ وحدات</strong>.
+            <div class="story-box"><i class="fas fa-chart-column"></i> كم عدد الوحدات التي يمثلها التمثيل بالكامل؟</div>
+        </div>
+        <div class="choices" id="choices-q5">
+            <div class="choice" data-q="5" data-val="11"><i class="fas fa-cube"></i> ١١ وحدة</div>
+            <div class="choice" data-q="5" data-val="24"><i class="fas fa-chart-simple"></i> ٢٤ وحدة</div>
+            <div class="choice" data-q="5" data-val="16"><i class="fas fa-chalkboard"></i> ١٦ وحدة</div>
+        </div>
+        <div class="feedback-area" id="feed-q5"><i class="fas fa-star"></i> اضغط على الإجابة الصحيحة .. ٨ × ٣ = ؟</div>
+        <div class="reset-btn" data-reset="5"><i class="fas fa-repeat"></i> حاول مجددًا</div>
+    </div>
+
+    <footer>
+        <i class="fas fa-face-smile"></i> أحسنت! كل إجابة صحيحة تقربك لتصبح بطل الإحصاء <i class="fas fa-chart-line"></i>
+    </footer>
+</div>
+
+<script>
+    // الإجابات الصحيحة لكل سؤال (مرتبة حسب رقم السؤال)
+    const correctMap = {
+        1: 18,
+        2: 24,
+        3: 10,
+        4: 18,
+        5: 24
+    };
+
+    // رسائل تشجيعية مختلفة لكل سؤال إذا كان صحيحًا
+    const successMessages = {
+        1: "🎉 ممتاز! الفرق بين الرياضة والثقافة = ١٨ شخصًا. أنت رائع!",
+        2: "🏆 عبقري! عدد الترتيبات المختلفة هو ٢٤. ترتيب ٤ أشياء = ٢٤ طريقة!",
+        3: "✈️ صحيح ١٠٠%! ٥ رموز × ٢ رحلة = ١٠ رحلات. عمل جيد!",
+        4: "🧆 أحسنت! الزعتر يزيد عن الجبن بـ ١٨ طالبًا. ذكاء رائع!",
+        5: "🌈 إجابة صحيحة! ٨ رموز × ٣ وحدات = ٢٤ وحدة. أنت نجم!"
+    };
+
+    const wrongHint = {
+        1: "❌ ليس صحيحًا. تذكر: ٢٨ - ١٠ = ١٨ ✅ أعد المحاولة",
+        2: "❌ لا بأس! عدد الترتيبات = ٤ × ٣ × ٢ × ١ = ٢٤. حاول مرة أخرى!",
+        3: "❌ قريب! كل رمز يساوي رحلتين، وعدد الرموز ٥، إذن ٥ × ٢ = ١٠ رحلات.",
+        4: "❌ ليس صحيحًا هذه المرة. الفرق = ٣٦ - ١٨ = ١٨ 🧀🥙",
+        5: "❌ أوه! ٨ رموز × ٣ وحدات = ٢٤ وحدة. حاول مجددًا"
+    };
+
+    // وظيفة عرض التغذية الراجعة
+    function showFeedback(questionId, isCorrect, selectedVal) {
+        const feedDiv = document.getElementById(`feed-q${questionId}`);
+        if (isCorrect) {
+            feedDiv.innerHTML = `<i class="fas fa-crown"></i> ${successMessages[questionId]}`;
+            feedDiv.classList.add("correct-feedback");
+            feedDiv.classList.remove("wrong-feedback");
+        } else {
+            feedDiv.innerHTML = `<i class="fas fa-face-sad-tear"></i> ${wrongHint[questionId]}`;
+            feedDiv.classList.add("wrong-feedback");
+            feedDiv.classList.remove("correct-feedback");
+        }
+    }
+
+    // إعادة تعيين منطقة التغذية الراجعة لكل سؤال (مع رسالة افتراضية)
+    function resetFeedback(questionId) {
+        const feedDiv = document.getElementById(`feed-q${questionId}`);
+        const defaultMsg = {
+            1: '<i class="fas fa-lightbulb"></i> اختر الإجابة الصحيحة .. أنت قادر!',
+            2: '<i class="fas fa-question-circle"></i> فكر جيدًا: كم طريقة لترتيب ٤ أشياء؟',
+            3: '<i class="fas fa-plane-departure"></i> اختر العدد الصحيح .. كل رمز = ٢ رحلة',
+            4: '<i class="fas fa-cheese"></i> احسب الفرق بين الزعتر والجبن',
+            5: '<i class="fas fa-star"></i> اضغط على الإجابة الصحيحة .. ٨ × ٣ = ؟'
+        };
+        feedDiv.innerHTML = defaultMsg[questionId] || 'اختر الإجابة الصحيحة';
+        feedDiv.classList.remove("correct-feedback", "wrong-feedback");
+    }
+
+    // إضافة مستمعين لكل الاختيارات
+    document.querySelectorAll('.choice').forEach(choice => {
+        choice.addEventListener('click', function(e) {
+            const qId = parseInt(this.getAttribute('data-q'));
+            const selectedValue = parseInt(this.getAttribute('data-val'));
+            const correctVal = correctMap[qId];
+            const isCorrect = (selectedValue === correctVal);
+            showFeedback(qId, isCorrect, selectedValue);
+            // تأثير بسيط للتحفيز
+            if (isCorrect) {
+                const block = document.getElementById(`q${qId}-block`);
+                block.style.transform = "scale(1.01)";
+                setTimeout(() => { block.style.transform = ""; }, 200);
+            } else {
+                this.style.backgroundColor = "#ffe0db";
+                setTimeout(() => { this.style.backgroundColor = ""; }, 250);
+            }
+        });
+    });
+
+    // أزرار إعادة المحاولة
+    document.querySelectorAll('.reset-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const qId = parseInt(this.getAttribute('data-reset'));
+            resetFeedback(qId);
+            // إزالة أي تأثيرات لونية من الخيارات (اختياري)
+            const container = document.getElementById(`choices-q${qId}`);
+            if(container) {
+                const allChoices = container.querySelectorAll('.choice');
+                allChoices.forEach(ch => {
+                    ch.style.backgroundColor = "";
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
