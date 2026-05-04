@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورقة عمل تفاعلية - الاحتمال (الاختمال)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Tahoma', Arial, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header h1 {
+            color: #11998e;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #666;
+            font-size: 18px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #11998e;
+            margin-bottom: 15px;
+            border-right: 5px solid #ff9800;
+            padding-right: 15px;
+        }
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #444;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f5f5f5;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .option:hover {
+            background: #e0e0e0;
+            transform: scale(1.02);
+        }
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        label {
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .check-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+        .check-btn:hover {
+            background: #f57c00;
+            transform: scale(1.02);
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            display: none;
+        }
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border-right: 4px solid #28a745;
+            display: block;
+        }
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border-right: 4px solid #dc3545;
+            display: block;
+        }
+        .result-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .result-summary h3 {
+            color: #11998e;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff9800;
+        }
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+        .balls-demo {
+            background: #f9f9f9;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .balls-demo h3 {
+            color: #11998e;
+            margin-bottom: 15px;
+        }
+        .ball {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .ball.blue {
+            background: #2196F3;
+        }
+        .ball.red {
+            background: #f44336;
+        }
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            .ball {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🎲 درس الاحتمال (الاختمال)</h1>
+        <p>ورقة عمل تفاعلية | اختر الإجابة الصحيحة وتحقق من نفسك</p>
+    </div>
+
+    <div class="balls-demo">
+        <h3>🟡 الكيس يحتوي على 📦:</h3>
+        <div>
+            <div class="ball blue"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+            <div class="ball red"></div>
+        </div>
+        <p style="margin-top: 10px;">🔵 كرة زرقاء (١) | 🔴 كرات حمراء (٧) | المجموع = ٨ كرات</p>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <div class="result-summary" id="result-summary">
+        <h3>📈 نتيجتك</h3>
+        <div class="score" id="score">٠ / ٠</div>
+        <button class="reset-btn" onclick="resetQuiz()">🔄 إعادة المحاولة</button>
+    </div>
+</div>
+
+<script>
+    function toArabicNumber(num) {
+        const arabicDigits = '٠١٢٣٤٥٦٧٨٩';
+        return num.toString().split('').map(d => arabicDigits[parseInt(d)]).join('');
+    }
+    
+    // تحويل رقم السؤال إلى حرف عربي (أ، ب، ج، د، هـ، و، ز، ح، ط، ي)
+    function toArabicLetter(num) {
+        const arabicLetters = ['أ', 'ب', 'ج', 'د', 'هـ', 'و', 'ز', 'ح', 'ط', 'ي'];
+        return arabicLetters[num];
+    }
+
+    const questions = [
+        {
+            text: "🎯 إذا سحبت نوره كرة من الكيس دون النظر، ما هو الاحتمال (الاختمال) أن تكون الكرة زرقاء؟",
+            options: ["أكيد", "أكثر احتمالاً", "أقل احتمالاً", "مستحيل"],
+            correct: 2,
+            explanation: "يوجد كرة زرقاء واحدة فقط من بين ٨ كرات، لذلك احتمال سحبها أقل احتمالاً."
+        },
+        {
+            text: "🎯 إذا سحبت نوره كرة من الكيس دون النظر، ما هو الاحتمال (الاختمال) أن تكون الكرة حمراء؟",
+            options: ["أكيد", "أكثر احتمالاً", "أقل احتمالاً", "مستحيل"],
+            correct: 1,
+            explanation: "يوجد ٧ كرات حمراء من بين ٨ كرات، لذلك احتمال سحبها أكثر احتمالاً."
+        },
+        {
+            text: "🎯 إذا كان الكيس يحتوي على كرات زرقاء فقط، ما هو احتمال سحب كرة حمراء؟",
+            options: ["أكيد", "أكثر احتمالاً", "أقل احتمالاً", "مستحيل"],
+            correct: 3,
+            explanation: "إذا كان الكيس يحتوي على كرات زرقاء فقط، فلا توجد أي كرة حمراء، لذلك سحب كرة حمراء مستحيل."
+        },
+        {
+            text: "🎯 إذا كان الكيس يحتوي على ٥ كرات حمراء و٥ كرات زرقاء، أي العبارات تصف احتمال سحب كرة حمراء؟",
+            options: ["أكيد", "أكثر احتمالاً", "أقل احتمالاً", "متساوي الاحتمال"],
+            correct: 3,
+            explanation: "عدد الكرات الحمراء = عدد الكرات الزرقاء = ٥، لذلك احتمال سحب كرة حمراء يساوي احتمال سحب كرة زرقاء."
+        },
+        {
+            text: "🎯 أي من العبارات التالية تصف حدثاً 'أكيداً'؟",
+            options: ["سحب كرة صفراء من كيس فيه كرات حمراء فقط", "سحب كرة حمراء من كيس فيه كرات حمراء فقط", "سحب كرة زرقاء من كيس فيه كرات حمراء فقط", "سحب كرة خضراء من كيس فيه كرات زرقاء"],
+            correct: 1,
+            explanation: "إذا كان الكيس يحتوي على كرات حمراء فقط، فإن سحب كرة حمراء هو حدث أكيد."
+        }
+    ];
+
+    let userAnswers = new Array(questions.length).fill(-1);
+    let checkedStatus = new Array(questions.length).fill(false);
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="question-title">السؤال ${toArabicNumber(idx + 1)}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options" id="options-${idx}">
+                    ${q.options.map((opt, optIdx) => `
+                        <div class="option" onclick="selectOption(${idx}, ${optIdx})">
+                            <input type="radio" name="q${idx}" id="q${idx}_opt${optIdx}" ${userAnswers[idx] === optIdx ? 'checked' : ''}>
+                            <label for="q${idx}_opt${optIdx}">${toArabicLetter(optIdx)} - ${opt}</label>
+                        </div>
+                    `).join('')}
+                </div>
+                <div>
+                    <button class="check-btn" onclick="checkAnswer(${idx})">✅ تحقق</button>
+                </div>
+                <div class="feedback" id="feedback-${idx}"></div>
+            `;
+            container.appendChild(card);
+        });
+        updateScore();
+    }
+
+    window.selectOption = (qIdx, optIdx) => {
+        userAnswers[qIdx] = optIdx;
+        const radios = document.querySelectorAll(`input[name="q${qIdx}"]`);
+        radios.forEach((radio, i) => {
+            radio.checked = (i === optIdx);
+        });
+        const feedbackDiv = document.getElementById(`feedback-${qIdx}`);
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.innerHTML = '';
+        checkedStatus[qIdx] = false;
+        updateScore();
+    };
+
+    window.checkAnswer = (qIdx) => {
+        const selected = userAnswers[qIdx];
+        const feedbackDiv = document.getElementById(`feedback-${qIdx}`);
+        const question = questions[qIdx];
+
+        if (selected === -1) {
+            feedbackDiv.className = 'feedback wrong';
+            feedbackDiv.innerHTML = '⚠️ الرجاء اختيار إجابة أولاً.';
+            return;
+        }
+
+        checkedStatus[qIdx] = true;
+
+        if (selected === question.correct) {
+            feedbackDiv.className = 'feedback correct';
+            feedbackDiv.innerHTML = `✅ صحيح! ${question.explanation}`;
+        } else {
+            const correctLetter = toArabicLetter(question.correct);
+            feedbackDiv.className = 'feedback wrong';
+            feedbackDiv.innerHTML = `❌ خطأ. الإجابة الصحيحة هي ${correctLetter}: ${question.options[question.correct]}.<br>📘 ${question.explanation}`;
+        }
+        updateScore();
+    };
+
+    function updateScore() {
+        let correctCount = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (checkedStatus[i] && userAnswers[i] === questions[i].correct) {
+                correctCount++;
+            }
+        }
+        document.getElementById('score').innerHTML = `${toArabicNumber(correctCount)} / ${toArabicNumber(questions.length)}`;
+    }
+
+    window.resetQuiz = () => {
+        userAnswers = new Array(questions.length).fill(-1);
+        checkedStatus = new Array(questions.length).fill(false);
+        renderQuestions();
+    };
+
+    renderQuestions();
+</script>
+</body>
+</html>
