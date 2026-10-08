@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>مغامرة الرياضيات | تدريبات ممتعة 🎈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;600;700;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--yellow:#FFD93D;--orange:#FF8C42;--pink:#FF6B9D;--blue:#4ECDC4;--purple:#6C5CE7;
+--green:#2ED573;--red:#FF4757;--dark:#2d3436;--cream:#FFF9EF;--sky1:#AEE9FF;--sky2:#E0F7FF;
+}
+html{scroll-behavior:smooth}
+body{
+font-family:'Baloo Bhaijaan 2','Cairo','Segoe UI',Tahoma,Arial,sans-serif;
+background:linear-gradient(180deg,#8ED6FF 0%,#C8F0FF 25%,#FFF6D9 60%,#FFE9F2 100%);
+min-height:100vh;color:var(--dark);overflow-x:hidden;
+}
+/* خلفية متحركة */
+.cloud{position:fixed;background:#fff;border-radius:50px;opacity:.85;z-index:0;pointer-events:none;animation:drift linear infinite}
+.cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%}
+.cloud.c1{width:120px;height:38px;top:8%;animation-duration:55s}
+.cloud.c1::before{width:55px;height:55px;top:-28px;right:18px}
+.cloud.c1::after{width:38px;height:38px;top:-18px;right:60px}
+.cloud.c2{width:90px;height:30px;top:18%;animation-duration:75s;animation-delay:-20s;transform:scale(.8)}
+.cloud.c2::before{width:45px;height:45px;top:-22px;right:14px}
+.cloud.c2::after{width:30px;height:30px;top:-14px;right:48px}
+.cloud.c3{width:140px;height:42px;top:32%;animation-duration:90s;animation-delay:-50s;opacity:.6}
+.cloud.c3::before{width:60px;height:60px;top:-30px;right:22px}
+.cloud.c3::after{width:42px;height:42px;top:-20px;right:72px}
+@keyframes drift{from{right:-200px}to{right:110%}}
+.balloon{position:fixed;z-index:0;font-size:42px;opacity:.7;pointer-events:none;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(-8deg)}100%{transform:translateY(-15vh) rotate(8deg)}}
+.star-bg{position:fixed;z-index:0;pointer-events:none;animation:twinkle 2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes bounceIn{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes slideIn{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes rainbow{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+@keyframes pulseBtn{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* الترويسة */
+header{
+position:sticky;top:0;z-index:50;
+background:linear-gradient(135deg,#6C5CE7,#A29BFE);
+color:#fff;padding:10px 14px;
+box-shadow:0 4px 18px rgba(108,92,231,.4);
+border-bottom:4px dashed rgba(255,255,255,.5);
+}
+.header-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px}
+.logo-ball{width:46px;height:46px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;animation:floaty 3s ease-in-out infinite;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.header-info{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.22);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.5);color:#fff;border-radius:999px;padding:4px 12px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px}
+.pill.gold{background:linear-gradient(135deg,#FFD93D,#FF9F1C);border-color:#fff;color:#5a3e00}
+.icon-btn{background:#fff;border:none;width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.15);transition:.2s}
+.icon-btn:active{transform:scale(.9)}
+
+main{max-width:980px;margin:0 auto;padding:16px 14px 60px;position:relative;z-index:2}
+.screen{display:none;animation:slideIn .45s ease}
+.screen.active{display:block}
+
+/* بطاقات */
+.card{
+background:#fff;border-radius:26px;padding:22px;
+box-shadow:0 8px 0 rgba(0,0,0,.08),0 18px 40px rgba(0,0,0,.12);
+border:4px solid #fff;position:relative;overflow:hidden;
+}
+.card.rainbow-top::before{content:'';position:absolute;top:0;right:0;left:0;height:10px;background:linear-gradient(90deg,#FF6B9D,#FFD93D,#2ED573,#4ECDC4,#6C5CE7,#FF6B9D);background-size:200% 100%;animation:rainbowMove 4s linear infinite}
+@keyframes rainbowMove{to{background-position:200% 0}}
+.mascot-big{font-size:84px;text-align:center;animation:floaty 3s ease-in-out infinite;line-height:1;filter:drop-shadow(0 8px 10px rgba(0,0,0,.15))}
+h1{font-size:28px;text-align:center;color:#6C5CE7;font-weight:800;margin:8px 0 4px}
+h2{font-size:22px;color:#6C5CE7;font-weight:800;margin-bottom:10px}
+.subtitle{text-align:center;color:#636e72;font-size:16px;margin-bottom:14px}
+.fun-divider{text-align:center;font-size:22px;letter-spacing:6px;margin:10px 0}
+
+/* أزرار */
+.btn{
+display:inline-flex;align-items:center;justify-content:center;gap:8px;
+border:none;cursor:pointer;font-family:inherit;font-weight:800;
+border-radius:999px;padding:14px 28px;font-size:18px;
+transition:.2s;text-decoration:none;min-height:54px;
+}
+.btn-primary{background:linear-gradient(135deg,#FF9F1C,#FF6B35);color:#fff;box-shadow:0 6px 0 #C25E00,0 10px 20px rgba(255,159,28,.4);width:100%;font-size:20px}
+.btn-primary:active{transform:translateY(4px);box-shadow:0 2px 0 #C25E00}
+.btn-green{background:linear-gradient(135deg,#2ED573,#1B9E56);color:#fff;box-shadow:0 6px 0 #0F6B38,0 10px 20px rgba(46,213,115,.35);width:100%}
+.btn-green:active{transform:translateY(4px);box-shadow:0 2px 0 #0F6B38}
+.btn-purple{background:linear-gradient(135deg,#6C5CE7,#4834d4);color:#fff;box-shadow:0 6px 0 #2E1DA8}
+.btn-blue{background:linear-gradient(135deg,#4ECDC4,#2A9FA8);color:#fff;box-shadow:0 6px 0 #1A6E77}
+.btn-pink{background:linear-gradient(135deg,#FF6B9D,#E84393);color:#fff;box-shadow:0 6px 0 #9B1F5E}
+.btn-ghost{background:#F1F2F6;color:var(--dark);box-shadow:0 4px 0 #B2BEC3}
+.btn-small{padding:10px 18px;font-size:15px;min-height:44px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn-row .btn{flex:1;min-width:140px}
+.btn:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.5)}
+.pulse{animation:pulseBtn 1.6s ease-in-out infinite}
+
+/* إدخال الاسم */
+.name-input{
+width:100%;padding:16px 18px;font-size:20px;font-family:inherit;font-weight:700;
+border:4px solid #DFE6E9;border-radius:18px;text-align:center;background:#F8FAFF;color:var(--dark);
+outline:none;transition:.2s;margin:10px 0;
+}
+.name-input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 4px rgba(108,92,231,.15)}
+.avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
+.avatar-opt{font-size:34px;background:#F1F2F6;border:4px solid transparent;border-radius:18px;padding:8px;cursor:pointer;text-align:center;transition:.2s}
+.avatar-opt.selected{border-color:var(--orange);background:#FFF3D6;transform:scale(1.12);box-shadow:0 6px 14px rgba(255,140,66,.35)}
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+.feature{background:linear-gradient(135deg,#FFF9EF,#FFF);border:3px dashed #FFD93D;border-radius:18px;padding:12px;text-align:center;font-weight:700;font-size:14px}
+.feature span{font-size:28px;display:block}
+
+/* الخريطة */
+.stages-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0}
+.stage-card{
+border-radius:22px;padding:16px;text-align:center;cursor:pointer;position:relative;overflow:hidden;
+border:4px solid #fff;box-shadow:0 6px 0 rgba(0,0,0,.1),0 12px 26px rgba(0,0,0,.12);
+transition:.25s;color:#fff;
+}
+.stage-card.locked{filter:grayscale(1);opacity:.65;cursor:not-allowed}
+.stage-card:not(.locked):hover{transform:translateY(-4px) scale(1.02)}
+.stage-card:not(.locked):active{transform:scale(.97)}
+.stage-emoji{font-size:52px;animation:floaty 3.5s ease-in-out infinite}
+.stage-card h3{font-size:17px;margin:6px 0 2px}
+.stage-card p{font-size:13px;opacity:.92}
+.stage-progress{background:rgba(255,255,255,.3);border-radius:999px;height:12px;margin-top:10px;overflow:hidden}
+.stage-progress>i{display:block;height:100%;background:#fff;border-radius:999px;transition:.5s}
+.stage-stars{font-size:16px;margin-top:6px;letter-spacing:2px}
+.s1{background:linear-gradient(135deg,#2ED573,#00B894)}
+.s2{background:linear-gradient(135deg,#4ECDC4,#0984e3)}
+.s3{background:linear-gradient(135deg,#FF9F1C,#FF6B35)}
+.s4{background:linear-gradient(135deg,#A29BFE,#6C5CE7)}
+.test-card{background:linear-gradient(135deg,#FF6B9D,#C44569)}
+.lock-badge{position:absolute;top:10px;left:10px;font-size:24px;background:rgba(0,0,0,.3);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* سؤال */
+.top-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.stage-tag{background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 16px}
+.q-count{background:#FFF3D6;border:2px solid #FFD93D;color:#7a5b00;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px}
+.progress-track{background:#E9ECEF;border-radius:999px;height:16px;overflow:hidden;margin-bottom:14px;border:2px solid #fff;box-shadow:inset 0 2px 4px rgba(0,0,0,.1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2ED573,#7bed9f,#FFD93D);border-radius:999px;transition:width .5s ease;min-width:24px;display:flex;align-items:center;justify-content:flex-end;padding-left:6px;font-size:11px;font-weight:800;color:#06552f}
+.question-box{
+background:linear-gradient(135deg,#F8F9FF,#EFF2FF);
+border:3px solid #A29BFE;border-radius:20px;padding:18px;text-align:center;margin-bottom:14px;position:relative;
+}
+.q-emoji{font-size:50px;animation:wiggle 2.5s ease-in-out infinite}
+.q-text{font-size:21px;font-weight:800;color:#2d3436;line-height:1.8;margin:8px 0}
+.q-text .num{background:#FFD93D;border-radius:10px;padding:0 10px;display:inline-block;box-shadow:0 2px 0 #c9a400}
+.listen-btn{background:#fff;border:2px solid #A29BFE;color:#6C5CE7;border-radius:999px;padding:6px 16px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;margin-top:6px}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt-btn{
+background:#fff;border:4px solid #DFE6E9;border-radius:18px;padding:14px 10px;
+font-family:inherit;font-size:19px;font-weight:800;cursor:pointer;
+display:flex;align-items:center;gap:10px;transition:.2s;color:var(--dark);
+box-shadow:0 4px 0 rgba(0,0,0,.06);min-height:64px;
+}
+.opt-btn .letter{width:38px;height:38px;min-width:38px;border-radius:50%;background:#F1F2F6;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6C5CE7;font-weight:800}
+.opt-btn:not(:disabled):hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 6px 14px rgba(108,92,231,.25)}
+.opt-btn.correct{border-color:var(--green);background:#E8FFF1;animation:pop .5s ease;box-shadow:0 0 0 4px rgba(46,213,115,.25)}
+.opt-btn.correct .letter{background:var(--green);color:#fff}
+.opt-btn.wrong{border-color:var(--red);background:#FFECEE;animation:shake .4s ease}
+.opt-btn.wrong .letter{background:var(--red);color:#fff}
+.opt-btn.dim{opacity:.55}
+.feedback{border-radius:18px;padding:14px;margin-top:12px;font-weight:700;font-size:16px;line-height:1.8;display:none;animation:bounceIn .5s ease}
+.feedback.show{display:block}
+.feedback.good{background:#E8FFF1;border:3px solid #2ED573;color:#0a5c2f}
+.feedback.bad{background:#FFF0F1;border:3px solid #FF6B81;color:#8a0f23}
+.feedback .fb-title{font-size:19px;font-weight:800;display:block;margin-bottom:4px}
+
+/* اختبار */
+.test-q-nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.dot{width:36px;height:36px;border-radius:50%;background:#E9ECEF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.dot.current{border-color:var(--purple);background:#DCD6FF;color:#4834d4;transform:scale(1.15)}
+.dot.answered{background:var(--green);color:#fff}
+.timer-box{background:#2d3436;color:#FFD93D;font-weight:800;border-radius:999px;padding:6px 18px;font-size:17px;display:inline-flex;align-items:center;gap:8px}
+
+/* شهادة */
+.certificate{
+background:linear-gradient(135deg,#FFFBEA,#FFFFFF);
+border:8px double #D4A017;border-radius:24px;padding:26px 20px;text-align:center;position:relative;overflow:hidden;
+box-shadow:0 12px 40px rgba(212,160,23,.3);
+}
+.certificate::before,.certificate::after{content:'⭐';position:absolute;font-size:34px;animation:twinkle 1.5s infinite}
+.certificate::before{top:12px;right:14px}
+.certificate::after{top:12px;left:14px}
+.cert-title{font-size:30px;font-weight:900;color:#B8860B;margin-bottom:2px}
+.cert-sub{color:#636e72;font-size:15px}
+.cert-name{font-size:32px;font-weight:900;color:#6C5CE7;margin:12px 0 4px;background:#F0EDFF;border-radius:16px;padding:8px;display:inline-block;min-width:200px;border:3px dashed #A29BFE}
+.cert-grade{font-size:22px;font-weight:800;margin:10px 0}
+.cert-stars{font-size:42px;letter-spacing:4px;margin:6px 0}
+.cert-date{color:#636e72;font-size:14px}
+.cert-msg{background:#E8FFF1;border:2px dashed #2ED573;border-radius:14px;padding:10px;font-weight:700;color:#0a5c2f;margin:12px 0}
+.trophy{font-size:90px;animation:bounceIn 1s ease, floaty 3s ease-in-out 1s infinite}
+
+/* احتفال */
+#confettiCanvas{position:fixed;inset:0;z-index:999;pointer-events:none;display:none}
+.celebrate-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:1000;font-size:110px;pointer-events:none;transition:transform .3s cubic-bezier(.68,-.55,.27,1.55)}
+.celebrate-pop.show{transform:translate(-50%,-50%) scale(1)}
+.toast{position:fixed;bottom:22px;right:50%;transform:translateX(50%) translateY(120px);background:#2d3436;color:#fff;font-weight:800;padding:12px 24px;border-radius:999px;z-index:1001;transition:.35s;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:16px;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(50%) translateY(0)}
+
+footer{text-align:center;color:#636e72;font-size:13px;padding:18px;position:relative;z-index:2;font-weight:600}
+footer b{color:#6C5CE7}
+
+@media(max-width:640px){
+h1{font-size:23px}
+.q-text{font-size:19px}
+.options-grid{grid-template-columns:1fr}
+.stages-grid{grid-template-columns:1fr}
+.avatar-grid{grid-template-columns:repeat(3,1fr)}
+.btn{font-size:17px}
+.mascot-big{font-size:66px}
+.logo{font-size:17px}
+.pill{font-size:12px;padding:4px 10px}
+.cert-name{font-size:26px}
+}
+@media print{
+header,footer,.no-print,.cloud,.balloon,.star-bg{display:none!important}
+body{background:#fff}
+.card,.certificate{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+<div class="celebrate-pop" id="popEmoji">🎉</div>
+<div class="toast" id="toast"></div>
+
+<div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+
+<header>
+<div class="header-inner">
+<div class="logo"><div class="logo-ball">🎈</div><div>مغامرة الرياضيات<br><small style="font-size:12px;font-weight:600;opacity:.9">تدريبات ممتعة للمرحلة الابتدائية</small></div></div>
+<div class="header-info">
+<div class="pill" id="pillName">👦 أهلاً بك!</div>
+<div class="pill gold" id="pillStars">⭐ ٠ نجمة</div>
+<button class="icon-btn" id="soundBtn" title="الصوت">🔊</button>
+<button class="icon-btn" id="homeBtn" title="الخريطة">🗺️</button>
+</div>
+</div>
+</header>
+
+<main>
+<!-- شاشة الترحيب -->
+<section class="screen active" id="screen-welcome">
+<div class="card rainbow-top">
+<div class="mascot-big">🦊🎒</div>
+<h1>أهلاً بك يا بطل الرياضيات! 🌟</h1>
+<p class="subtitle">هيا ننطلق في مغامرة ممتعة عبر الجزر والجبال والقلاع!<br>أجب عن الأسئلة، اجمع النجوم، واحصل على شهادة البطل 🏆</p>
+<div class="fun-divider">🌈 ⭐ 🌈 ⭐ 🌈</div>
+<label style="font-weight:800;color:#6C5CE7">✏️ اكتب اسمك يا بطل:</label>
+<input class="name-input" id="studentName" maxlength="30" placeholder="مثال: خالد">
+<label style="font-weight:800;color:#6C5CE7">🦁 اختر شخصيتك المفضلة:</label>
+<div class="avatar-grid" id="avatarGrid"></div>
+<div class="features">
+<div class="feature"><span>🎯</span>٢٠ تدريبًا ممتعًا<br>في ٤ مراحل</div>
+<div class="feature"><span>📝</span>اختبار الأبطال<br>١٠ أسئلة</div>
+<div class="feature"><span>⭐</span>اجمع النجوم<br>وافتح المراحل</div>
+<div class="feature"><span>🏆</span>شهادة إنجاز<br>باسمك ودرجتك</div>
+</div>
+<button class="btn btn-primary pulse" onclick="startAdventure()">🚀 هيا نبدأ المغامرة!</button>
+<div class="btn-row">
+<button class="btn btn-ghost btn-small" onclick="continueAdventure()">▶️ أكمل من حيث توقفت</button>
+<button class="btn btn-ghost btn-small" onclick="resetAll()">🗑️ بداية جديدة</button>
+</div>
+<p id="savedInfo" style="text-align:center;margin-top:10px;color:#636e72;font-weight:700;font-size:14px"></p>
+</div>
+</section>
+
+<!-- شاشة الخريطة -->
+<section class="screen" id="screen-map">
+<div class="card rainbow-top">
+<div style="text-align:center;font-size:60px;animation:floaty 3s infinite" id="mapAvatar">🦊</div>
+<h1 id="mapTitle">خريطة المغامرة 🗺️</h1>
+<p class="subtitle" id="mapSubtitle">اختر المرحلة وانطلق يا بطل!</p>
+<div class="progress-track"><div class="progress-fill" id="totalProgress" style="width:5%">٠٪</div></div>
+<div class="stages-grid" id="stagesGrid"></div>
+<div class="card" style="background:linear-gradient(135deg,#FFF3D6,#FFE9F2);border:3px dashed #FF9F1C;margin-top:6px;padding:14px;text-align:center">
+<div style="font-size:40px">🏆</div>
+<b>اختبار الأبطال النهائي</b>
+<p style="font-size:14px;color:#636e72">يفتح بعد إكمال التدريبات العشرين كلها!</p>
+<div id="testLockInfo" style="font-weight:800;margin:6px 0"></div>
+<button class="btn btn-pink" id="goTestBtn" onclick="goTestIntro()">📝 الذهاب إلى الاختبار</button>
+</div>
+<div class="btn-row">
+<button class="btn btn-blue btn-small" onclick="showScreen('screen-welcome')">👤 تغيير الاسم</button>
+<button class="btn btn-ghost btn-small" onclick="resetAll()">🗑️ مسح التقدم</button>
+</div>
+</div>
+</section>
+
+<!-- شاشة التدريب -->
+<section class="screen" id="screen-training">
+<div class="card rainbow-top">
+<div class="top-bar">
+<div class="stage-tag" id="trainStageTag">🌴 المرحلة ١</div>
+<div class="q-count" id="trainCount">السؤال ١ من ٢٠</div>
+</div>
+<div class="progress-track"><div class="progress-fill" id="trainProgress" style="width:5%"></div></div>
+<div class="question-box">
+<div class="q-emoji" id="trainEmoji">🎯</div>
+<div class="q-text" id="trainQuestion"></div>
+<button class="listen-btn" onclick="listenQuestion()">🔊 استمع إلى السؤال</button>
+</div>
+<div class="options-grid" id="trainOptions"></div>
+<div class="feedback" id="trainFeedback"></div>
+<div class="btn-row">
+<button class="btn btn-ghost btn-small" onclick="showScreen('screen-map')">🗺️ الخريطة</button>
+<button class="btn btn-green" id="trainNextBtn" onclick="nextTraining()" disabled>التالي ⬅️</button>
+</div>
+</div>
+</section>
+
+<!-- مقدمة الاختبار -->
+<section class="screen" id="screen-testintro">
+<div class="card rainbow-top" style="text-align:center">
+<div class="mascot-big">🦁📝</div>
+<h1>اختبار الأبطال النهائي! 🏆</h1>
+<p class="subtitle">١٠ أسئلة ممتعة لتثبت أنك بطل الرياضيات الحقيقي!<br>أجب بتركيز.. الشهادة الذهبية بانتظارك ✨</p>
+<div class="features">
+<div class="feature"><span>📝</span>١٠ أسئلة<br>اختيار من متعدد</div>
+<div class="feature"><span>⏰</span>بدون وقت محدد<br>خذ راحتك</div>
+<div class="feature"><span>🌟</span>٧ نجوم فأكثر<br>يعني بطل ذهبي!</div>
+<div class="feature"><span>🎓</span>شهادة إنجاز<br>باسمك ودرجتك</div>
+</div>
+<div id="lastScoreInfo" style="font-weight:800;color:#6C5CE7;margin-bottom:10px"></div>
+<button class="btn btn-primary pulse" onclick="startTest()">🚀 ابدأ الاختبار الآن!</button>
+<div class="btn-row"><button class="btn btn-ghost btn-small" onclick="showScreen('screen-map')">⬅️ عودة للخريطة</button></div>
+</div>
+</section>
+
+<!-- شاشة الاختبار -->
+<section class="screen" id="screen-test">
+<div class="card rainbow-top">
+<div class="top-bar">
+<div class="stage-tag" style="background:linear-gradient(135deg,#FF6B9D,#C44569)">🏆 اختبار الأبطال</div>
+<div class="timer-box">⏰ <span id="testTimer">٠٠:٠٠</span></div>
+</div>
+<div class="test-q-nav" id="testNav"></div>
+<div class="progress-track"><div class="progress-fill" id="testProgress" style="width:10%"></div></div>
+<div class="question-box" style="border-color:#FF6B9D;background:linear-gradient(135deg,#FFF0F5,#FFF)">
+<div class="q-emoji" id="testEmoji">📝</div>
+<div class="q-text" id="testQuestion"></div>
+<button class="listen-btn" style="border-color:#FF6B9D;color:#C44569" onclick="listenTest()">🔊 استمع إلى السؤال</button>
+</div>
+<div class="options-grid" id="testOptions"></div>
+<div class="btn-row">
+<button class="btn btn-ghost btn-small" id="testPrevBtn" onclick="prevTest()">➡️ السابق</button>
+<button class="btn btn-pink" id="testNextBtn" onclick="nextTest()">التالي ⬅️</button>
+</div>
+</div>
+</section>
+
+<!-- الشهادة -->
+<section class="screen" id="screen-cert">
+<div class="card rainbow-top" style="text-align:center">
+<div class="trophy">🏆</div>
+<h1>أحسنت يا بطل! 🎉</h1>
+<p class="subtitle">لقد أكملت المغامرة بنجاح! هذه شهادتك الذهبية:</p>
+<div class="certificate" id="certificate">
+<div class="cert-title">🎓 شهادة إنجاز 🎓</div>
+<div class="cert-sub">تشهد مغامرة الرياضيات بأن البطل / البطلة</div>
+<div class="cert-name" id="certName">خالد</div>
+<div class="cert-grade" id="certGrade">حصل على الدرجة ١٠ من ١٠ بتقدير ممتاز 🌟</div>
+<div class="cert-stars" id="certStars">⭐⭐⭐</div>
+<div class="cert-msg" id="certMsg">مذهل! أنت عبقري الرياضيات الصغير! 🎉</div>
+<div class="cert-date" id="certDate"></div>
+<div style="margin-top:10px;font-size:14px;color:#B8860B;font-weight:800">🖊️ توقيع المعلمة: مس أمل 🌸 &nbsp;&nbsp; 🏫 مدرسة الأبطال الصغار</div>
+</div>
+<div class="btn-row no-print">
+<button class="btn btn-primary" onclick="window.print()">🖨️ اطبع شهادتك</button>
+</div>
+<div class="btn-row no-print">
+<button class="btn btn-blue btn-small" onclick="showScreen('screen-map')">🗺️ الخريطة</button>
+<button class="btn btn-green btn-small" onclick="startTest()">🔄 أعد الاختبار</button>
+<button class="btn btn-ghost btn-small" onclick="reviewTest()">📋 مراجعة الإجابات</button>
+</div>
+<div id="reviewBox" style="text-align:right;margin-top:12px"></div>
+</div>
+</section>
+</main>
+
+<footer>صُنع بحب ❤️ لأبطال الرياضيات الصغار | <b>مغامرة الرياضيات - تدريبات</b> 🌟 | تقدمك محفوظ تلقائيًا 💾</footer>
+
+<script>
+// ===== تحويل الأرقام إلى عربية =====
+const AR='٠١٢٣٤٥٦٧٨٩';
+function toAr(x){return String(x).replace(/[0-9]/g,d=>AR[+d]);}
+function todayAr(){
+try{return new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});}catch(e){return toAr(new Date().toLocaleDateString());}
+}
+
+// ===== البيانات: ٢٠ تدريبًا =====
+const STAGES=[
+{n:'المرحلة ١: جزيرة الأنماط 🏝️',c:'s1',d:'الأنماط والقيمة المكانية'},
+{n:'المرحلة ٢: غابة الأعداد 🌳',c:'s2',d:'الصيغ والمقارنة والترتيب'},
+{n:'المرحلة ٣: جبل التقريب ⛰️',c:'s3',d:'التقريب لأقرب عشرة ومئة وألف'},
+{n:'المرحلة ٤: قلعة الجمع 🏰',c:'s4',d:'الجمع والخواص والمسائل'}
+];
+const TRAIN=[
+{q:'العدد المناسب في الفراغ في النمط التالي: <span class="num">٣ ، ٦ ، … ، ١٢</span> هو …',o:['٥','٧','٨','٩'],a:3,e:'النمط يزيد <b>٣</b> في كل مرة: ٣ ثم ٦ (٣+٣) ثم <b>٩</b> (٦+٣) ثم ١٢ (٩+٣). لذلك الفراغ = ٩. 🎯',em:'🔢'},
+{q:'العدد المناسب في الفراغ في النمط: <span class="num">٢٠ ، ٣٠ ، ٤٠ ، …</span> هو …',o:['٤٥','٥٠','٦٠','١٠٠'],a:1,e:'نزيد <b>١٠</b> كل مرة: ٢٠ ثم ٣٠ ثم ٤٠ ثم <b>٥٠</b>. لاحظ أن الآحاد صفر دائمًا والعشرات تزيد واحدًا. 🌟',em:'🐸'},
+{q:'قيمة الرقم <span class="num">٣</span> في العدد <span class="num">٣٤١٨</span> هي …',o:['٣','٣٠','٣٠٠','٣٠٠٠'],a:3,e:'الرقم ٣ في منزلة <b>الألوف</b> (المرتبة الرابعة)، وقيمته = ٣ × ١٠٠٠ = <b>٣٠٠٠</b>. 🏠',em:'🏠'},
+{q:'العدد الذي فيه قيمة الرقم <span class="num">٩</span> في منزلة <b>الألوف</b> هو …',o:['١٢٩٨','٩٨٧٣','٣٤٩٩','٨٩٥١'],a:1,e:'في العدد <b>٩٨٧٣</b> الرقم ٩ في المقدمة أي منزلة الألوف وقيمته ٩٠٠٠. أما البقية فالرقم ٩ في المئات أو العشرات. 🔍',em:'🔍'},
+{q:'يُكتب العدد (خمسة آلاف ومئة وواحد وثلاثون) بالصيغة القياسية …',o:['٥١٣١','١٣١٥','١٣٥','٥٣١١'],a:0,e:'خمسة آلاف = ٥ في الألوف، ومئة = ١ في المئات، وواحد وثلاثون = ٣١. فيكون العدد <b>٥١٣١</b>. ✏️',em:'✏️'},
+{q:'تُكتب الصيغة التحليلية للعدد <span class="num">١٤٢٩</span> …',o:['٩+٢٠+٤٠٠+١٠٠٠','٩٠٠+٤٠+٢+١','١+٤+٢+٩','١٠٠+٤٠+٢+٩'],a:0,e:'نفكك كل رقم حسب منزلته: ٩ آحاد + ٢٠ عشرات + ٤٠٠ مئات + <b>١٠٠٠</b> ألوف = <b>٩+٢٠+٤٠٠+١٠٠٠</b>. 🧩',em:'🧩'},
+{q:'الرمز الصحيح للمقارنة بين العددين <span class="num">٧٦٥ … ٥٧٦</span> هو …',o:['>','<','=','+'],a:0,e:'نقارن من اليسار: المئات ٧ أكبر من ٥، إذن ٧٦٥ <b>أكبر من</b> ٥٧٦ ونضع علامة <b>></b> وفمها المفتوح نحو الكبير. 🐊',em:'🐊'},
+{q:'الرمز الصحيح للمقارنة بين <span class="num">٦٥٤</span> و <span class="num">٨٠٤</span> هو: ٦٥٤ … ٨٠٤',o:['>','<','=','−'],a:1,e:'المئات ٦ أصغر من ٨، إذن ٦٥٤ <b>أصغر من</b> ٨٠٤ ونضع <b><</b>. تذكر: رأس العلامة المدبب يشير للصغير! 🐤',em:'⚖️'},
+{q:'رتب الأعداد التالية من الأصغر إلى الأكبر: <span class="num">٢٠٠٢ ، ٢٠ ، ٢٠٢</span>',o:['٢٠٠٢ ، ٢٠٢ ، ٢٠','٢٠ ، ٢٠٢ ، ٢٠٠٢','٢٠٢ ، ٢٠ ، ٢٠٠٢','٢٠ ، ٢٠٠٢ ، ٢٠٢'],a:1,e:'نقارن عدد الأرقام أولًا: <b>٢٠</b> (رقمان) أصغر، ثم <b>٢٠٢</b> (٣ أرقام)، ثم <b>٢٠٠٢</b> (٤ أرقام) أكبر. 🪜',em:'🪜'},
+{q:'عندما نقرب العدد <span class="num">٤٣</span> إلى أقرب عشرة يصبح …',o:['٥٠','٤٠','٤','١٤'],a:1,e:'ننظر لرقم الآحاد (٣): لأنه أصغر من ٥ نرد العشرات كما هي: ٤٣ قريبة من <b>٤٠</b>. 📍',em:'📍'},
+{q:'عندما نقرب العدد <span class="num">٥٧</span> إلى أقرب عشرة يصبح …',o:['٥٠','٥٥','٦٠','٧٠'],a:2,e:'رقم الآحاد (٧) أكبر من ٥، إذن نزيد العشرات واحدًا: ٥٧ ← <b>٦٠</b>. الأرقام الكريمة (٥-٩) تعطي واحدًا! 🎁',em:'🎁'},
+{q:'عندما نقرب العدد <span class="num">١٨٥</span> إلى أقرب مئة يصبح …',o:['١٠٠','٢٠٠','٣٠٠','١٨٠'],a:1,e:'ننظر لرقم العشرات (٨): لأنه ≥ ٥ نزيد المئات واحدًا: ١٨٥ ← <b>٢٠٠</b>. 💯',em:'💯'},
+{q:'عندما نقرب العدد <span class="num">٣٦٨٢</span> إلى أقرب ألف يصبح …',o:['٣٠٠٠','٣٦٠٠','٤٠٠٠','٣٧٠٠'],a:2,e:'ننظر للمئات (٦): لأنها ≥ ٥ نزيد الألوف واحدًا: ٣٦٨٢ ← <b>٤٠٠٠</b>. 🎯',em:'🏔️'},
+{q:'العدد الذي يجعل الجملة صحيحة: <span class="num">(٥ + …) + ٣ = ٥ + (٢ + ٣)</span> هو …',o:['٢','٤','٥','١'],a:0,e:'الطرفان متساويان إذا كان الرقم الناقص هو <b>٢</b>، لأن الجمع تجميعي: (٥+٢)+٣ = ٥+(٢+٣) = ١٠. ⚖️',em:'⚖️'},
+{q:'الخاصية المستعملة في الجملة <span class="num">٢٣ + ١٤ = ١٤ + ٢٣</span> هي خاصية …',o:['الإبدال','التجميع','العنصر المحايد','الطرح'],a:0,e:'بدّلنا أماكن العددين والناتج لم يتغير (٣٧ = ٣٧)، وهذه خاصية <b>الإبدال</b>: أ + ب = ب + أ. 🔄',em:'🔄'},
+{q:'الخاصية في الجملة <span class="num">٢ = ٠ + ٢</span> هي خاصية …',o:['الإبدال','التجميع','العنصر المحايد','الضرب'],a:2,e:'جمعنا <b>الصفر</b> مع ٢ فبقيت ٢ كما هي، والصفر هو <b>العنصر المحايد الجمعي</b>. صفر + أي عدد = نفس العدد. 🦸',em:'🦸'},
+{q:'أوجد ناتج: <span class="num">٢٣ + ٤٧</span> = …',o:['٦٠','٧٠','٦٩','٨٠'],a:1,e:'٣+٧=١٠ (نكتب ٠ ونحمل ١)، ثم ٢+٤+١=٧. الناتج <b>٧٠</b>. 🎒',em:'🎒'},
+{q:'أوجد ناتج: <span class="num">٣٦٥ + ١٥٢</span> = …',o:['٥١٧','٥٠٧','٤١٧','٥٢٧'],a:0,e:'٥+٢=٧ آحاد، ٦+٥=١١ (١ عشرات ونحمل ١)، ٣+١+١=٥ مئات. الناتج <b>٥١٧</b>. 🧮',em:'🧮'},
+{q:'صرف خالد <span class="num">٣٧٨</span> ريالًا وصرف أخوه <span class="num">٤٩١</span> ريالًا. كم صرف الاثنان معًا؟',o:['٨٦٩','٨٥٩','٧٦٩','٩٦٩'],a:0,e:'نجمع: ٣٧٨ + ٤٩١ = <b>٨٦٩</b> ريالًا. (٨+١=٩، ٧+٩=١٦ نحمل ١، ٣+٤+١=٨). 💰',em:'💰'},
+{q:'قيمة الرقم <span class="num">٤</span> في العدد <span class="num">٤٨٢</span> هي …',o:['٤','٤٠','٤٠٠','٤٠٠٠'],a:2,e:'الرقم ٤ في منزلة <b>المئات</b> وقيمته = ٤ × ١٠٠ = <b>٤٠٠</b>. 🏰',em:'🏰'}
+];
+// ===== الاختبار النهائي: ١٠ أسئلة =====
+const TEST=[
+{q:'يُكتب العدد (سبعة آلاف وثلاث مئة وخمسة وعشرون) بالصيغة القياسية …',o:['٧٣٢٥','٧٣٥٢','٧٢٣٥','٣٢٥٧'],a:0,e:'٧ ألوف و٣ مئات و٢٥ = <b>٧٣٢٥</b>.',em:'✏️'},
+{q:'قيمة الرقم <span class="num">٧</span> في العدد <span class="num">١٧٤٢</span> هي …',o:['٧','٧٠','٧٠٠','٧٠٠٠'],a:2,e:'الرقم ٧ في منزلة <b>المئات</b> = <b>٧٠٠</b>.',em:'🏠'},
+{q:'أكبر هذه الأعداد هو …<br><span class="num">٣٤٥٠ ، ٣٥٤٠ ، ٣٠٤٥</span>',o:['٣٤٥٠','٣٥٤٠','٣٠٤٥','كلها متساوية'],a:1,e:'نقارن العشرات بعد تساوي الألوف والمئات: ٤٠ > ٥٠؟ لا! ٣٥٤٠ فيها ٥ مئات؟ بل نقارن: ٣٥٤٠ > ٣٤٥٠ > ٣٠٤٥. الأكبر <b>٣٥٤٠</b>.',em:'👑'},
+{q:'عندما نقرب العدد <span class="num">٦٧٣</span> إلى أقرب مئة يصبح …',o:['٦٠٠','٦٧٠','٧٠٠','٨٠٠'],a:2,e:'العشرات (٧) ≥ ٥ فنزيد المئات: ٦٧٣ ← <b>٧٠٠</b>.',em:'💯'},
+{q:'ناتج <span class="num">١٥٦ + ٢٣٤</span> = …',o:['٣٨٠','٣٩٠','٣٩١','٤٠٠'],a:1,e:'٦+٤=١٠، ٥+٣+١=٩، ١+٢=٣ ← <b>٣٩٠</b>.',em:'🧮'},
+{q:'الخاصية في الجملة <span class="num">(٥ + ٧) + ٣ = ٥ + (٧ + ٣)</span> هي …',o:['الإبدال','التجميع','العنصر المحايد','الطرح'],a:1,e:'غيّرنا <b>تجميع</b> الأقواس فقط والناتج واحد (١٥)، فهي خاصية <b>التجميع</b>.',em:'🔗'},
+{q:'العدد التالي في النمط <span class="num">٤ ، ٨ ، ١٢ ، …</span> هو …',o:['١٤','١٥','١٦','٢٠'],a:2,e:'نزيد ٤ كل مرة: ٤، ٨، ١٢، <b>١٦</b>.',em:'🐝'},
+{q:'رتب تنازليًا (من الأكبر إلى الأصغر): <span class="num">٩٨٠ ، ٨٩٠ ، ٩٠٨</span>',o:['٨٩٠ ، ٩٠٨ ، ٩٨٠','٩٨٠ ، ٩٠٨ ، ٨٩٠','٩٠٨ ، ٩٨٠ ، ٨٩٠','٩٨٠ ، ٨٩٠ ، ٩٠٨'],a:1,e:'المئات: ٩=٩>٨. ثم نقارن ٩٨٠ و٩٠٨: العشرات ٨ > ٠. الترتيب: <b>٩٨٠ ، ٩٠٨ ، ٨٩٠</b>.',em:'🪜'},
+{q:'عندما نقرب العدد <span class="num">٤٥</span> إلى أقرب عشرة يصبح …',o:['٤٠','٤٥','٥٠','٦٠'],a:2,e:'الآحاد ٥ من الأرقام الكريمة تعطي واحدًا للعشرات: ٤٥ ← <b>٥٠</b>.',em:'🎁'},
+{q:'مع سارة <span class="num">١٢٠</span> ريالًا، اشترت لعبة بـ <span class="num">٨٥</span> ريالًا. كم بقي معها؟',o:['٤٥','٣٥','٢٥','٥٥'],a:1,e:'١٢٠ − ٨٥ = <b>٣٥</b> ريالًا. (١٢٠−٨٠=٤٠، ٤٠−٥=٣٥).',em:'🛍️'}
+];
+const LETTERS=['أ','ب','ج','د'];
+const AVATARS=['🦊','🦁','🐼','🐰','🐨','🚀'];
+const CHEERS=['🎉','⭐','🌟','🎊','💫','🥳'];
+const PRAISE=['مذهل! 🎉','رائع يا بطل! ⭐','عبقري! 🧠','أحسنت! 👏','ممتاز! 🌟','برافو! 🎊'];
+
+// ===== الحالة + التخزين =====
+const KEY='mathAdventure_v1';
+let S={name:'',avatar:'🦊',stars:0,trainIndex:0,trainAnswers:{},trainDone:false,test:{score:0,total:10,date:'',answers:[]},testIndex:0,testAnswers:{},sound:true};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(S,JSON.parse(r));}}catch(e){}}
+load();
+
+// ===== الصوتيات (Web Audio) =====
+let AC=null;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC;}
+function tone(f,t0,d,type='sine',v=.22){if(!S.sound)return;try{const c=ac();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=f;const t=c.currentTime+t0;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.05);}catch(e){}}
+function playCorrect(){tone(523,0,.16);tone(659,.12,.16);tone(784,.24,.3,'sine',.26);tone(1047,.36,.35,'triangle',.18);}
+function playWrong(){tone(220,0,.25,'sawtooth',.12);tone(165,.18,.35,'sawtooth',.12);}
+function playClick(){tone(500,0,.08,'triangle',.15);}
+function playPop(){tone(700,0,.09,'square',.1);tone(900,.07,.12,'square',.08);}
+function playStar(){tone(880,0,.15,'sine',.2);tone(1174,.1,.25,'sine',.2);}
+function playFanfare(){[523,523,523,659,784,784,1047].forEach((f,i)=>tone(f,i*.16,.22,'triangle',.2));}
+
+// ===== أدوات عرض =====
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2200);}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='screen-map')renderMap();updateHeader();}
+function updateHeader(){
+document.getElementById('pillName').textContent=(S.avatar||'👦')+' '+(S.name?('أهلًا '+S.name+'!'):'أهلاً بك!');
+document.getElementById('pillStars').textContent='⭐ '+toAr(S.stars)+' نجمة';
+document.getElementById('soundBtn').textContent=S.sound?'🔊':'🔇';
+}
+function popCelebrate(em){const p=document.getElementById('popEmoji');p.textContent=em||CHEERS[Math.floor(Math.random()*CHEERS.length)];p.classList.add('show');setTimeout(()=>p.classList.remove('show'),900);}
+
+// قصاصات الاحتفال
+const cvs=document.getElementById('confettiCanvas'),ctx=cvs.getContext('2d');let parts=[],confOn=false;
+function sizeC(){cvs.width=innerWidth;cvs.height=innerHeight;}addEventListener('resize',sizeC);sizeC();
+function confetti(n=120){sizeC();cvs.style.display='block';const cols=['#FF6B9D','#FFD93D','#2ED573','#4ECDC4','#6C5CE7','#FF8C42'];parts=[];for(let i=0;i<n;i++)parts.push({x:Math.random()*cvs.width,y:-20-Math.random()*200,w:6+Math.random()*8,h:8+Math.random()*10,c:cols[i%cols.length],vy:2+Math.random()*3.5,vx:-1.5+Math.random()*3,r:Math.random()*Math.PI,vr:-.1+Math.random()*.2});if(!confOn){confOn=true;requestAnimationFrame(confLoop);}clearTimeout(confetti._t);confetti._t=setTimeout(()=>{confOn=false;cvs.style.display='none';},3500);}
+function confLoop(){if(!confOn)return;ctx.clearRect(0,0,cvs.width,cvs.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();if(p.y>cvs.height+30){p.y=-20;p.x=Math.random()*cvs.width;}});requestAnimationFrame(confLoop);}
+
+// ===== الترحيب =====
+let selAvatar=S.avatar||'🦊';
+function renderAvatars(){const g=document.getElementById('avatarGrid');g.innerHTML='';AVATARS.forEach(a=>{const d=document.createElement('div');d.className='avatar-opt'+(a===selAvatar?' selected':'');d.textContent=a;d.onclick=()=>{playClick();selAvatar=a;renderAvatars();};g.appendChild(d);});}
+renderAvatars();
+if(S.name){document.getElementById('studentName').value=S.name;
+const done=Object.keys(S.trainAnswers).length;
+document.getElementById('savedInfo').textContent='💾 لدينا حفظ سابق: '+S.name+' — أنجز '+toAr(done)+' من '+toAr(20)+' تدريبًا ونجومه '+toAr(S.stars)+' ⭐';
+}
+function startAdventure(){
+playClick();
+const n=document.getElementById('studentName').value.trim();
+if(!n){toast('✏️ اكتب اسمك أولًا يا بطل!');document.getElementById('studentName').focus();return;}
+S.name=n;S.avatar=selAvatar;save();updateHeader();
+toast('🎉 أهلًا '+n+'! هيا نبدأ!');
+showScreen('screen-map');
+}
+function continueAdventure(){playClick();if(!S.name){const n=document.getElementById('studentName').value.trim();if(n){S.name=n;S.avatar=selAvatar;save();}}if(!S.name){toast('اكتب اسمك أولًا يا بطل ✏️');return;}updateHeader();showScreen('screen-map');}
+function resetAll(){playClick();if(confirm('هل تريد فعلًا مسح كل التقدم والبدء من جديد؟ 🗑️')){const snd=S.sound;S={name:'',avatar:'🦊',stars:0,trainIndex:0,trainAnswers:{},trainDone:false,test:{score:0,total:10,date:'',answers:[]},testIndex:0,testAnswers:{},sound:snd};save();selAvatar='🦊';renderAvatars();document.getElementById('studentName').value='';document.getElementById('savedInfo').textContent='';updateHeader();showScreen('screen-welcome');toast('✨ بداية جديدة موفقة!');}}
+
+// ===== الخريطة =====
+function stageStats(si){const start=si*5;let done=0,stars=0;for(let i=start;i<start+5;i++){if(S.trainAnswers[i]!==undefined){done++;if(S.trainAnswers[i].correct)stars++;}}return{done,stars};}
+function stageUnlocked(si){if(si===0)return true;const p=stageStats(si-1);return p.done===5;}
+function renderMap(){
+document.getElementById('mapAvatar').textContent=S.avatar||'🦊';
+document.getElementById('mapTitle').textContent='خريطة '+ (S.name||'البطل') +' 🗺️';
+const total=Object.keys(S.trainAnswers).length;
+const pct=Math.round(total/20*100);
+document.getElementById('totalProgress').style.width=Math.max(5,pct)+'%';
+document.getElementById('totalProgress').textContent=toAr(pct)+'٪ ('+toAr(total)+' من '+toAr(20)+')';
+const g=document.getElementById('stagesGrid');g.innerHTML='';
+STAGES.forEach((s,si)=>{
+const st=stageStats(si),un=stageUnlocked(si);
+const d=document.createElement('div');
+d.className='stage-card '+s.c+(un?'':' locked');
+d.innerHTML=(un?'':'<div class="lock-badge">🔒</div>')+'<div class="stage-emoji">'+['🏝️','🌳','⛰️','🏰'][si]+'</div><h3>'+s.n+'</h3><p>'+s.d+'</p><div class="stage-progress"><i style="width:'+(st.done/5*100)+'%"></i></div><div class="stage-stars">'+'⭐'.repeat(st.stars)+'☆'.repeat(5-st.stars)+' <span style="font-size:12px">('+toAr(st.done)+' من '+toAr(5)+')</span></div>';
+if(un)d.onclick=()=>{playClick();startStage(si);};else d.onclick=()=>{playWrong();toast('🔒 أكمل المرحلة السابقة أولًا يا بطل!');};
+g.appendChild(d);
+});
+// اختبار
+const lock=document.getElementById('testLockInfo'),btn=document.getElementById('goTestBtn');
+if(total===20){lock.innerHTML='✅ مفتوح! أكملت كل التدريبات يا بطل!';btn.disabled=false;
+if(!S.trainDone){S.trainDone=true;save();}}
+else{const left=20-total;lock.textContent='🔒 يتبقى '+toAr(left)+' تدريبًا لفتح الاختبار';btn.disabled=true;}
+updateHeader();
+}
+function startStage(si){let idx=si*5;for(let i=si*5;i<si*5+5;i++){if(S.trainAnswers[i]===undefined){idx=i;break;}idx=i;}S.trainIndex=idx;save();renderTraining();showScreen('screen-training');}
+function goTestIntro(){playClick();const total=Object.keys(S.trainAnswers).length;if(total<20){playWrong();toast('🔒 أكمل التدريبات العشرين أولًا! يتبقى '+toAr(20-total));return;}
+document.getElementById('lastScoreInfo').textContent=S.test.date?('📌 آخر نتيجة لك: '+toAr(S.test.score)+' من '+toAr(10)+' بتاريخ '+S.test.date):'';
+showScreen('screen-testintro');}
+
+// ===== التدريب =====
+function renderTraining(){
+const i=S.trainIndex,q=TRAIN[i],si=Math.floor(i/5);
+document.getElementById('trainStageTag').textContent=STAGES[si].n;
+document.getElementById('trainCount').textContent='السؤال '+toAr(i+1)+' من '+toAr(20);
+const pct=Math.round((i)/20*100);
+document.getElementById('trainProgress').style.width=Math.max(5,pct)+'%';
+document.getElementById('trainProgress').textContent=toAr(i+1)+' / '+toAr(20);
+document.getElementById('trainEmoji').textContent=q.em;
+document.getElementById('trainQuestion').innerHTML=q.q;
+const box=document.getElementById('trainOptions');box.innerHTML='';
+const fb=document.getElementById('trainFeedback');fb.className='feedback';fb.innerHTML='';
+document.getElementById('trainNextBtn').disabled=true;
+document.getElementById('trainNextBtn').innerHTML=(i===19?'🏁 إنهاء التدريبات ⬅️':'التالي ⬅️');
+const prev=S.trainAnswers[i];
+q.o.forEach((op,oi)=>{
+const b=document.createElement('button');
+b.className='opt-btn';b.innerHTML='<span class="letter">'+LETTERS[oi]+'</span><span>'+op+'</span>';
+if(prev!==undefined){
+b.disabled=true;
+if(oi===q.a)b.classList.add('correct');
+else if(oi===prev.selected&&!prev.correct)b.classList.add('wrong');
+else b.classList.add('dim');
+}else{
+b.onclick=()=>answerTraining(oi);
+}
+box.appendChild(b);
+});
+if(prev!==undefined)showTrainFeedback(prev.selected===q.a,q);
+}
+function answerTraining(oi){
+playPop();
+const i=S.trainIndex,q=TRAIN[i],ok=(oi===q.a);
+const btns=document.getElementById('trainOptions').children;
+[...btns].forEach((b,bi)=>{b.disabled=true;if(bi===q.a)b.classList.add('correct');else if(bi===oi)b.classList.add('wrong');else b.classList.add('dim');});
+// نجوم
+const wasAnswered=S.trainAnswers[i]!==undefined,wasCorrect=wasAnswered&&S.trainAnswers[i].correct;
+if(!wasAnswered&&ok){S.stars++;playStar();}
+S.trainAnswers[i]={selected:oi,correct:ok};
+// إعادة حساب النجوم بدقة
+S.stars=Object.values(S.trainAnswers).filter(a=>a.correct).length;
+save();updateHeader();
+showTrainFeedback(ok,q);
+document.getElementById('trainNextBtn').disabled=false;
+if(ok){playCorrect();confetti(90);popCelebrate();}else{playWrong();}
+}
+function showTrainFeedback(ok,q){
+const fb=document.getElementById('trainFeedback');
+if(ok){fb.className='feedback good show';fb.innerHTML='<span class="fb-title">'+PRAISE[Math.floor(Math.random()*PRAISE.length)]+'</span>✅ إجابة صحيحة!<br>💡 <b>الشرح:</b> '+q.e;}
+else{fb.className='feedback bad show';fb.innerHTML='<span class="fb-title">حاول مرة أخرى! 💪</span>❌ ليست صحيحة هذه المرة.<br>💡 <b>الشرح:</b> '+q.e+'<br>🌟 لا بأس يا بطل، الخطأ طريق التعلم!';}
+}
+function nextTraining(){
+playClick();
+if(S.trainIndex<19){S.trainIndex++;save();renderTraining();window.scrollTo({top:0,behavior:'smooth'});}
+else{
+S.trainDone=true;save();playFanfare();confetti(200);
+toast('🏆 أكملت التدريبات العشرين! الاختبار انفتح!');
+setTimeout(()=>{showScreen('screen-map');},900);
+}
+}
+function listenQuestion(){speak(document.getElementById('trainQuestion').textContent);}
+function listenTest(){speak(document.getElementById('testQuestion').textContent);}
+function speak(t){try{if(!('speechSynthesis'in window)){toast('🔇 النطق غير مدعوم في متصفحك');return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/…/g,' '));u.lang='ar-SA';u.rate=.95;speechSynthesis.speak(u);}catch(e){toast('🔇 تعذر تشغيل الصوت');}}
+
+// ===== الاختبار =====
+let tSec=0,tInt=null;
+function startTest(){playClick();S.testIndex=0;S.testAnswers={};save();tSec=0;clearInterval(tInt);tInt=setInterval(()=>{tSec++;const m=String(Math.floor(tSec/60)).padStart(2,'0'),s=String(tSec%60).padStart(2,'0');document.getElementById('testTimer').textContent=toAr(m+':'+s);},1000);document.getElementById('testTimer').textContent='٠٠:٠٠';renderTest();showScreen('screen-test');}
+function renderTestNav(){const n=document.getElementById('testNav');n.innerHTML='';TEST.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===S.testIndex?' current':'')+(S.testAnswers[i]!==undefined?' answered':'');d.textContent=toAr(i+1);d.onclick=()=>{playClick();S.testIndex=i;save();renderTest();};n.appendChild(d);});}
+function renderTest(){
+const i=S.testIndex,q=TEST[i];
+renderTestNav();
+document.getElementById('testProgress').style.width=((i+1)/10*100)+'%';
+document.getElementById('testProgress').textContent=toAr(i+1)+' / '+toAr(10);
+document.getElementById('testEmoji').textContent=q.em;
+document.getElementById('testQuestion').innerHTML='<b style="color:#C44569">سؤال '+toAr(i+1)+' من '+toAr(10)+':</b><br>'+q.q;
+const box=document.getElementById('testOptions');box.innerHTML='';
+const sel=S.testAnswers[i];
+q.o.forEach((op,oi)=>{
+const b=document.createElement('button');b.className='opt-btn'+(sel===oi?' correct':'');
+if(sel===oi)b.style.borderColor='#FF6B9D';
+b.innerHTML='<span class="letter">'+LETTERS[oi]+'</span><span>'+op+'</span>';
+b.onclick=()=>{playPop();S.testAnswers[i]=oi;save();renderTest();};
+box.appendChild(b);
+});
+document.getElementById('testPrevBtn').disabled=(i===0);
+document.getElementById('testNextBtn').innerHTML=(i===9?'🏆 عرض النتيجة والشهادة':'التالي ⬅️');
+}
+function prevTest(){if(S.testIndex>0){playClick();S.testIndex--;save();renderTest();}}
+function nextTest(){
+playClick();
+if(S.testAnswers[S.testIndex]===undefined){playWrong();toast('⚠️ اختر إجابة أولًا يا بطل!');return;}
+if(S.testIndex<9){S.testIndex++;save();renderTest();window.scrollTo({top:0,behavior:'smooth'});}
+else finishTest();
+}
+function finishTest(){
+clearInterval(tInt);
+let score=0;const det=[];
+TEST.forEach((q,i)=>{const sel=S.testAnswers[i],ok=(sel===q.a);if(ok)score++;det.push({sel,ok});});
+S.test={score,total:10,date:todayAr(),answers:det};save();
+playFanfare();confetti(250);popCelebrate('🏆');
+showCertificate();
+}
+function gradeText(s){
+if(s===10)return'ممتاز مع مرتبة الشرف 🌟🌟🌟';
+if(s>=9)return'ممتاز 🌟🌟';
+if(s>=7)return'جيد جدًا 🌟';
+if(s>=5)return'جيد 👍';
+return'يحتاج إلى تدريب أكثر 💪';
+}
+function certMsg(s){
+if(s===10)return'🏆 مذهل! علامة كاملة! أنت عبقري الرياضيات الصغير! استمر يا بطل!';
+if(s>=9)return'🌟 رائع جدًا! أنت من نخبة الأبطال! فخورون بك!';
+if(s>=7)return'👏 أحسنت! مستوى بطل حقيقي! خطوة واحدة نحو القمة!';
+if(s>=5)return'💪 جيد! أنت تتقدم! راجع التدريبات وحاول مرة أخرى للنجوم الذهبية!';
+return'🌱 بداية طيبة! الأبطال لا يستسلمون! راجع التدريبات وحاول مجددًا!';
+}
+function showCertificate(){
+document.getElementById('certName').textContent=(S.avatar||'')+' '+S.name;
+document.getElementById('certGrade').innerHTML='حصل على الدرجة <b style="color:#C44569;font-size:26px">'+toAr(S.test.score)+' من '+toAr(10)+'</b> بتقدير: <b>'+gradeText(S.test.score)+'</b>';
+let st='';for(let i=0;i<10;i++)st+=i<S.test.score?'⭐':'☆';
+document.getElementById('certStars').textContent=st;
+document.getElementById('certMsg').textContent=certMsg(S.test.score);
+document.getElementById('certDate').textContent='📅 التاريخ: '+S.test.date+' — ⏰ مدة الاختبار: '+toAr(Math.floor(tSec/60))+':'+toAr(String(tSec%60).padStart(2,'0'));
+document.getElementById('reviewBox').innerHTML='';
+showScreen('screen-cert');
+window.scrollTo({top:0});
+setTimeout(()=>confetti(200),600);
+}
+function reviewTest(){
+playClick();
+const box=document.getElementById('reviewBox');
+let h='<div class="card" style="padding:14px"><h2>📋 مراجعة إجاباتك:</h2>';
+TEST.forEach((q,i)=>{
+const r=S.test.answers[i];const ok=r?r.ok:false;
+h+='<div style="background:'+(ok?'#E8FFF1':'#FFF0F1')+';border:2px solid '+(ok?'#2ED573':'#FF6B81')+';border-radius:14px;padding:10px;margin:8px 0;font-size:15px">'
++'<b>'+(ok?'✅':'❌')+' سؤال '+toAr(i+1)+':</b> '+q.q+'<br>'
++'إجابتك: <b>'+(r&&r.sel!==undefined?q.o[r.sel]:'—')+'</b> | الصحيحة: <b style="color:#0a5c2f">'+q.o[q.a]+'</b><br>'
++'<span style="color:#555">💡 '+q.e+'</span></div>';
+});
+h+='</div>';box.innerHTML=h;box.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== أزرار علوية + زخارف =====
+document.getElementById('soundBtn').onclick=()=>{S.sound=!S.sound;save();updateHeader();if(S.sound)playClick();toast(S.sound?'🔊 الصوت يعمل':'🔇 الصوت متوقف');};
+document.getElementById('homeBtn').onclick=()=>{playClick();if(!S.name){showScreen('screen-welcome');}else showScreen('screen-map');};
+// بالونات ونجوم خلفية
+(function(){
+for(let i=0;i<6;i++){const b=document.createElement('div');b.className='balloon';b.textContent=['🎈','🎈','☁️','🦋','🎈','🕊️'][i];b.style.right=(5+i*16)+'%';b.style.animationDuration=(22+i*7)+'s';b.style.animationDelay=(-i*6)+'s';b.style.fontSize=(26+i*6)+'px';document.body.appendChild(b);}
+for(let i=0;i<14;i++){const s=document.createElement('div');s.className='star-bg';s.textContent='✨';s.style.top=(Math.random()*90)+'%';s.style.right=(Math.random()*95)+'%';s.style.fontSize=(12+Math.random()*16)+'px';s.style.animationDelay=(Math.random()*2)+'s';document.body.appendChild(s);}
+})();
+updateHeader();
+// استئناف تلقائي للتدريب عند التحميل إذا كان في المنتصف
+if(S.name&&Object.keys(S.trainAnswers).length>0&&Object.keys(S.trainAnswers).length<20){
+// يبقى في الترحيب لكن يعرض معلومة المتابعة
+}
+</script>
+</body>
+</html>
